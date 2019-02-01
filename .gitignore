@@ -1,0 +1,10 @@
+node_modules
+coverage
+dist
+.opt-in
+.opt-out
+.DS_Store
+.eslintcache
+
+build
+storybook-static
