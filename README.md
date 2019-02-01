@@ -23,11 +23,13 @@ npm install --save-dev @helpscout/moxie
 ```js
 import {createMoxie, createSchema, faker} from '@helpscout/moxie'
 
+// Define your schemas
 const UserSchema = createSchema({
   id: faker.random.uuid(),
   name: faker.name.firstName(),
 })
 
+// Create some initial state
 const initialState = {
   users: [
     {
@@ -37,6 +39,7 @@ const initialState = {
   ],
 }
 
+// Create the mock database
 const moxie = createMoxie(
   'users',
   {
@@ -45,6 +48,7 @@ const moxie = createMoxie(
   initialState,
 )
 
+// Make the "get" request!
 moxie.get('users/123').then(data => {
   console.log(data)
   // {
