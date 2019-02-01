@@ -1,6 +1,6 @@
-import Moxie from './Moxie'
+import createMoxie from './createMoxie'
 export {default as createDB} from './createDB'
 export {default as faker} from './faker'
-export {default as Schema} from './Schema'
+export {default as createSchema} from './createSchema'
 
-export default Moxie
+export default createMoxie

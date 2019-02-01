@@ -45,10 +45,47 @@ describe('get', () => {
 })
 
 describe('write', () => {
-  test('Can update an entry', () => {
-    const db = createDB('users')
-    db.defaults(initialState).write()
+  let db = createDB('users')
 
+  beforeEach(() => {
+    const initialState = {
+      users: [
+        {id: 0, name: 'Stan'},
+        {id: 1, name: 'Kyle'},
+        {id: 2, name: 'Kenny'},
+        {id: 3, name: 'Cartman'},
+      ],
+    }
+
+    db.setState(initialState)
+  })
+
+  test('Can add a new entry', () => {
+    let entries = db.get('users').value()
+
+    expect(entries).toHaveLength(4)
+
+    const newEntry = {
+      id: 6,
+      name: 'Tweak',
+    }
+
+    db.get('users')
+      .push(newEntry)
+      .write()
+
+    entries = db.get('users').value()
+
+    expect(entries).toHaveLength(5)
+    expect(
+      db
+        .get('users')
+        .last()
+        .value().name,
+    ).toBe('Tweak')
+  })
+
+  test('Can update an entry', () => {
     db.get('users')
       .find({name: 'Kenny'})
       .assign({name: 'Tweak'})
@@ -66,6 +103,17 @@ describe('write', () => {
 
     expect(oldEntry).toBeFalsy()
     expect(newEntry).toBeTruthy()
+  })
+
+  test('Can clear collection', () => {
+    let entries = db.get('users').value()
+
+    expect(entries).toHaveLength(4)
+
+    db.setState({users: []})
+    entries = db.get('users').value()
+
+    expect(entries).toHaveLength(0)
   })
 })
 
