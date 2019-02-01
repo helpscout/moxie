@@ -1,4 +1,4 @@
-# 🤘 Moxie
+# 😘 Moxie
 
 > Create client side mock API endpoints
 
