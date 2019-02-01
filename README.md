@@ -9,6 +9,7 @@
 
 - [Installation](#installation)
 - [Usage](#usage)
+- [Thanks!](#thanks)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -57,3 +58,7 @@ moxie.get('users/123').then(data => {
   // }
 })
 ```
+
+## Thanks!
+
+Thanks to [lowdb](https://github.com/lowdb/lowdb) for the database set up and to [@jmauerhan](https://github.com/jmauerhan) for picking the 😘 emoji for Moxie!
