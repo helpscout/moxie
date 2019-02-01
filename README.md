@@ -44,7 +44,7 @@ const initialState = {
 const moxie = createMoxie(
   'users',
   {
-    user: UserSchema,
+    users: UserSchema,
   },
   initialState,
 )
