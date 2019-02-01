@@ -34,7 +34,7 @@ test('Can retrieve data from get("path/")', async () => {
   const moxie = createMoxie(
     'users',
     {
-      user: UserSchema,
+      users: UserSchema,
     },
     initialState,
   )
@@ -50,7 +50,7 @@ test('Can handle retrieving data that does not exist from get("path/")', () => {
   const moxie = createMoxie(
     'users',
     {
-      user: UserSchema,
+      users: UserSchema,
     },
     initialState,
   )
@@ -71,7 +71,7 @@ test('Can retrieve data from get("path/:id")', async () => {
   const moxie = createMoxie(
     'users',
     {
-      user: UserSchema,
+      users: UserSchema,
     },
     initialState,
   )
@@ -94,7 +94,7 @@ test('Can handle retrieving data that does not exist from get("path/:id")', () =
   const moxie = createMoxie(
     'users',
     {
-      user: UserSchema,
+      users: UserSchema,
     },
     initialState,
   )
