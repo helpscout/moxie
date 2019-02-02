@@ -10,6 +10,12 @@ const initialState = {
 }
 
 describe('Instantiation', () => {
+  test('Can create a database without arguments', () => {
+    const moxie = createDB()
+
+    expect(moxie.get).toBeTruthy()
+  })
+
   test('Can create a basic database', () => {
     const db = createDB('users')
     db.defaults(initialState).write()

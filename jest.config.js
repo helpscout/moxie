@@ -1,7 +1,7 @@
 const {defaults: tsjPreset} = require('ts-jest/presets')
 const jestConfig = require('@helpscout/zero/jest')
 
-const coverageList = ['src/**/*.{js,jsx,ts,tsx}']
+const coverageList = ['src/**/*.{js,jsx,ts,tsx}', '!src/adapters/**/*']
 
 module.exports = Object.assign({}, jestConfig, {
   collectCoverageFrom: []

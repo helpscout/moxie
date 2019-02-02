@@ -15,6 +15,13 @@ const UserSchema = createSchema({
 })
 
 describe('Initialize', () => {
+  test('Can create a database without arguments', () => {
+    const moxie = createMoxie()
+
+    expect(moxie.get).toBeTruthy()
+    expect(moxie.post).toBeTruthy()
+  })
+
   test('Can set initialState', () => {
     const initialState = {
       users: UserSchema.generate(10),
