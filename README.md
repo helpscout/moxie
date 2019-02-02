@@ -1,5 +1,7 @@
 # 😘 Moxie
 
+[![Build Status](https://travis-ci.org/helpscout/moxie.svg?branch=master)](https://travis-ci.org/helpscout/moxie)
+
 > Create client side mock API endpoints
 
 ## Table of Contents
