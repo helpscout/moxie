@@ -20,6 +20,9 @@ describe('Initialize', () => {
 
     expect(moxie.get).toBeTruthy()
     expect(moxie.post).toBeTruthy()
+    expect(moxie.name).toBe('MoxieDB')
+    expect(moxie.schemas).toEqual({})
+    expect(moxie.getState()).toEqual({})
   })
 
   test('Can set initialState', () => {
@@ -120,6 +123,13 @@ describe('get', () => {
 
     expect(moxie.get('/users/nope')).rejects.toEqual(errorResponse)
   })
+
+  test('Rejects if empty', () => {
+    const moxie = createMoxie()
+
+    // @ts-ignore
+    expect(moxie.get()).rejects.toEqual(errorResponse)
+  })
 })
 
 describe('post', () => {
@@ -166,5 +176,52 @@ describe('post', () => {
       expect(status).toBe(200)
       expect(data.name).toBe('Stan Darsh')
     })
+  })
+
+  test('Rejects if empty', () => {
+    const moxie = createMoxie()
+
+    // @ts-ignore
+    expect(moxie.post()).rejects.toEqual(errorResponse)
+  })
+})
+
+describe('responseReducer', () => {
+  test('Can customize data', async () => {
+    const spy = jest.fn()
+    const initialState = {
+      users: [],
+    }
+    const moxie = createMoxie(
+      'users',
+      {
+        users: UserSchema,
+      },
+      initialState,
+      {
+        responseReducer: data => {
+          spy(data)
+          return {
+            ...data,
+            name: 'Stan DARSH',
+          }
+        },
+      },
+    )
+
+    const newEntry = {
+      id: '123',
+      name: 'Stan Marsh',
+    }
+
+    // Generate the user
+    await moxie.post('/users/123', newEntry)
+
+    await moxie.get('/users/123').then(({data, status}) => {
+      expect(status).toBe(200)
+      expect(data.name).toBe('Stan DARSH')
+    })
+
+    expect(spy).toHaveBeenCalledWith(newEntry)
   })
 })

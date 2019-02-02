@@ -8,7 +8,8 @@ const createDB = (name: MoxieName = 'MoxieDB', initialState?: InitialState) => {
     // @ts-ignore
     process.env.NODE_ENV === 'test'
       ? new Memory(name)
-      : new SessionStorage(name),
+      : /* istanbul ignore next */
+        new SessionStorage(name),
   )
 
   if (initialState) {

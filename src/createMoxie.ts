@@ -22,7 +22,7 @@ function createMoxie(
     let response
 
     if (!route && !id) {
-      return Promise.reject()
+      return Promise.reject(createStatus400())
     }
 
     if (id) {
@@ -49,7 +49,7 @@ function createMoxie(
     let response
 
     if (!route && !id) {
-      return Promise.reject()
+      return Promise.reject(createStatus400())
     }
 
     response = id && props
@@ -88,6 +88,8 @@ function createMoxie(
     post,
     getState: database.getState,
     setState: database.setState,
+    name,
+    schemas,
   }
 }
 
