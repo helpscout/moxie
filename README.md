@@ -50,11 +50,18 @@ const moxie = createMoxie(
 )
 
 // Make the "get" request!
-moxie.get('users/123').then(data => {
-  console.log(data)
+moxie.get('users/123').then(response => {
+  console.log(response)
   // {
-  //   id: '123',
-  //   name: 'Randy Marsh',
+  //   status: 200,
+  //   statusText: 'OK',
+  //   data: {
+  //     id: '123',
+  //     name: 'Randy Marsh',
+  //   },
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //   },
   // }
 })
 ```
