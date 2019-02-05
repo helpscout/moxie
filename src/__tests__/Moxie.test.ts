@@ -186,6 +186,224 @@ describe('post', () => {
   })
 })
 
+describe('put', () => {
+  test('Can add an entry to a collection at route/', async () => {
+    const initialState = {
+      users: [],
+    }
+    const moxie = createMoxie(
+      'users',
+      {
+        users: UserSchema,
+      },
+      initialState,
+    )
+
+    // Generate the user
+    await moxie.put('/users')
+
+    await moxie.get('/users').then(({data, status}) => {
+      expect(status).toBe(200)
+      expect(data).toHaveLength(1)
+    })
+  })
+
+  test('Can add an entry to a collection at route/id', async () => {
+    const initialState = {
+      users: [],
+    }
+    const moxie = createMoxie(
+      'users',
+      {
+        users: UserSchema,
+      },
+      initialState,
+    )
+
+    // Generate the user
+    await moxie.put('/users/123', {
+      id: '123',
+      name: 'Stan Darsh',
+    })
+
+    await moxie.get('/users/123').then(({data, status}) => {
+      expect(status).toBe(200)
+      expect(data.name).toBe('Stan Darsh')
+    })
+  })
+
+  test('Rejects if empty', () => {
+    const moxie = createMoxie()
+
+    // @ts-ignore
+    expect(moxie.put()).rejects.toEqual(errorResponse)
+  })
+})
+
+describe('patch', () => {
+  test('Can add an entry to a collection at route/', async () => {
+    const initialState = {
+      users: [],
+    }
+    const moxie = createMoxie(
+      'users',
+      {
+        users: UserSchema,
+      },
+      initialState,
+    )
+
+    // Generate the user
+    await moxie.patch('/users')
+
+    await moxie.get('/users').then(({data, status}) => {
+      expect(status).toBe(200)
+      expect(data).toHaveLength(1)
+    })
+  })
+
+  test('Can add an entry to a collection at route/id', async () => {
+    const initialState = {
+      users: [],
+    }
+    const moxie = createMoxie(
+      'users',
+      {
+        users: UserSchema,
+      },
+      initialState,
+    )
+
+    // Generate the user
+    await moxie.patch('/users/123', {
+      id: '123',
+      name: 'Stan Darsh',
+    })
+
+    await moxie.get('/users/123').then(({data, status}) => {
+      expect(status).toBe(200)
+      expect(data.name).toBe('Stan Darsh')
+    })
+  })
+
+  test('Rejects if empty', () => {
+    const moxie = createMoxie()
+
+    // @ts-ignore
+    expect(moxie.patch()).rejects.toEqual(errorResponse)
+  })
+})
+
+describe('delete', () => {
+  test('Can delete an item from a collection', async () => {
+    const initialState = {
+      users: [
+        {
+          id: '123',
+          name: 'Stan DARSH',
+        },
+      ],
+    }
+    const moxie = createMoxie(
+      'users',
+      {
+        users: UserSchema,
+      },
+      initialState,
+    )
+
+    await moxie.delete('/users/123')
+
+    await moxie.get('/users').then(({data, status}) => {
+      expect(status).toBe(200)
+      expect(data).toHaveLength(0)
+    })
+  })
+
+  test('Rejects if incorrect path', async () => {
+    const initialState = {
+      users: [
+        {
+          id: '123',
+          name: 'Stan DARSH',
+        },
+      ],
+    }
+    const moxie = createMoxie(
+      'users',
+      {
+        users: UserSchema,
+      },
+      initialState,
+    )
+
+    expect(moxie.delete('/nope')).rejects.toEqual(errorResponse)
+  })
+
+  test('Rejects if no path', async () => {
+    const initialState = {
+      users: [
+        {
+          id: '123',
+          name: 'Stan DARSH',
+        },
+      ],
+    }
+    const moxie = createMoxie(
+      'users',
+      {
+        users: UserSchema,
+      },
+      initialState,
+    )
+
+    // @ts-ignore
+    expect(moxie.delete()).rejects.toEqual(errorResponse)
+  })
+
+  test('Rejects if incorrect ID', async () => {
+    const initialState = {
+      users: [
+        {
+          id: '123',
+          name: 'Stan DARSH',
+        },
+      ],
+    }
+    const moxie = createMoxie(
+      'users',
+      {
+        users: UserSchema,
+      },
+      initialState,
+    )
+
+    expect(moxie.delete('/users/abc')).rejects.toEqual(errorResponse)
+  })
+
+  test('Can delete a collection', async () => {
+    const initialState = {
+      users: [
+        {
+          id: '123',
+          name: 'Stan DARSH',
+        },
+      ],
+    }
+    const moxie = createMoxie(
+      'users',
+      {
+        users: UserSchema,
+      },
+      initialState,
+    )
+
+    await moxie.delete('/users')
+
+    expect(moxie.get('/users')).rejects.toEqual(errorResponse)
+  })
+})
+
 describe('responseReducer', () => {
   test('Can customize data', async () => {
     const spy = jest.fn()

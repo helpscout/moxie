@@ -83,9 +83,43 @@ function createMoxie(
     })
   }
 
+  function remove(path: Path) {
+    const pattern = new Pattern(`/:route(/:id)`).match(path) || {}
+    const {route, id} = pattern
+
+    if (!route && !id) {
+      return Promise.reject(createStatus400())
+    }
+
+    if (id) {
+      const response = database
+        .get(route)
+        .find({id})
+        .value()
+
+      if (!response) {
+        return Promise.reject(createStatus400())
+      }
+
+      database
+        .get(route)
+        .remove({id})
+        .write()
+
+      return Promise.resolve(createStatus200(response))
+    } else {
+      database.unset(route).write()
+
+      return Promise.resolve(createStatus200({}))
+    }
+  }
+
   return {
     get,
     post,
+    put: post,
+    patch: post,
+    delete: remove,
     getState: database.getState,
     setState: database.setState,
     name,
