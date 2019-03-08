@@ -1,6 +1,6 @@
 {
   "name": "@helpscout/moxie",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Create client side mock API endpoints",
   "main": "dist/index.js",
   "private": false,
